@@ -1,0 +1,46 @@
+<script src="/socket.io/socket.io.js"></script>
+<script>
+var socket = io();
+
+socket.on('move_event', function(msg){
+    move_ball(msg.x,msg.y);
+    console.log(msg);
+});
+
+var context;
+var x=window.outerWidth/2 - 10;
+var y=window.outerHeight/2 - 10;
+var dx=5;
+var dy=5;
+
+function init()
+{
+  context= myCanvas.getContext('2d');
+  setInterval(draw,10);
+  myCanvas.height = window.outerHeight;
+  myCanvas.width = window.outerWidth;
+}
+
+function move_ball(lx,ly){
+  x = lx;
+  y = ly;
+}
+
+function draw()
+{
+  context.clearRect(0,0, window.outerWidth,window.outerHeight);
+  context.beginPath();
+  context.fillStyle="#0000ff";
+  // Draws a circle of radius 20 at the coordinates 100,100 on the canvas
+  context.arc(x,y,20,0,Math.PI*2,true); 
+  context.closePath();
+  context.fill();
+  // x+=dx;
+  // y+=dy;
+}
+
+</script>
+<body onLoad="init();">
+  <canvas id="myCanvas" width="300" height="300" >
+  </canvas>
+</body>
